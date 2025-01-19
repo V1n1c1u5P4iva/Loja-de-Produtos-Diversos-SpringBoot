@@ -28,12 +28,6 @@ public class Venda {
     private List<ItemVenda> itens;
 
     
-    public Venda(LocalDate data, Cliente cliente, List<ItemVenda> itens) {
-        this.data = data;
-        this.cliente = cliente;
-        this.itens = itens;
-    }
-
     public Long getId() {
         return id;
     }

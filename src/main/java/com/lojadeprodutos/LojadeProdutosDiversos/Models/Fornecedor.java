@@ -23,14 +23,6 @@ public class Fornecedor {
     @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
     private List<Produto> produtos;
 
-    
-    public Fornecedor(String nome, String cnpj, String telefone, String endereco, List<Produto> produtos) {
-        this.nome = nome;
-        this.cnpj = cnpj;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.produtos = produtos;
-    }
 
     public Long getId() {
         return id;

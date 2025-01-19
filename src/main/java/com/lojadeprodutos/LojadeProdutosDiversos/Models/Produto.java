@@ -23,13 +23,6 @@ public class Produto {
     private Fornecedor fornecedor;
 
     
-    public Produto(String nome, String descricao, float preco, int estoque, Fornecedor fornecedor) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.estoque = estoque;
-        this.fornecedor = fornecedor;
-    }
 
     public Long getId() {
         return id;

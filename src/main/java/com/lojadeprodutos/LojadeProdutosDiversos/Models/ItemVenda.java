@@ -24,13 +24,6 @@ public class ItemVenda {
     private int quantidade;
     private float precoUnitario;
 
-    public ItemVenda(Venda venda, Produto produto, int quantidade, float precoUnitario) {
-        this.venda = venda;
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.precoUnitario = precoUnitario;
-    }
-
     public Long getId() {
         return id;
     }
