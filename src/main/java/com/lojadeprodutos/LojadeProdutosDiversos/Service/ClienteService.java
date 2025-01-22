@@ -34,4 +34,13 @@ public class ClienteService {
         return repository.findAll();
     }
 
+    public String remover(Long id){
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return "Cliente removido com sucesso";
+        }else{
+            return "Cliente não encontrado";
+        }
+    }
+
 }

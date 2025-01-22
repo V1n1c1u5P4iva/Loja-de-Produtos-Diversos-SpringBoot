@@ -1,9 +1,15 @@
 package com.lojadeprodutos.LojadeProdutosDiversos.Controller;
 
+import java.util.List;
+
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Cliente;
 import com.lojadeprodutos.LojadeProdutosDiversos.Service.ClienteService;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +25,32 @@ public class ClienteController {
     }
 
     @PostMapping
-    public void salvar(@RequestBody Cliente cliente){
+    public void salvar(@RequestBody Cliente cliente) {
         service.salvar(cliente);
     }
+
+    @GetMapping("{id}")
+    public Cliente mostrarCliente(@PathVariable Long id) {
+        return service.bucarPorId(id);
+    }
+
+    @GetMapping("/lista")
+    public List<Cliente> listarClientes() {
+
+        return service.listaClistes();
+
+    }
+
+    @PutMapping("{id}")
+    public Cliente atualizar(@PathVariable Long id,
+            @RequestBody Cliente cliente) {
+        cliente.setId(id);
+        return service.atualizar(cliente);
+    }
+
+    @DeleteMapping("{id}")
+    public String  deletarCliente(@PathVariable Long id){
+        return service.remover(id);
+    }
+
 }
