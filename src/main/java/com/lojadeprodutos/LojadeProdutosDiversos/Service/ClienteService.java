@@ -5,6 +5,7 @@ import java.util.List;
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Cliente;
 import com.lojadeprodutos.LojadeProdutosDiversos.repository.ClienteRepository;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,9 +18,15 @@ public class ClienteService {
     }
 
     public Cliente salvar(Cliente cliente) {
-        repository.save(cliente);
-        return cliente;
+        try {
+            return repository.save(cliente); // Salva o cliente no banco de dados
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("E-mail já cadastrado: " + cliente.getEmail());
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao salvar cliente: " + e.getMessage());
+        }
     }
+    
 
     public Cliente atualizar(Cliente cliente) {
         repository.save(cliente);
@@ -30,15 +37,15 @@ public class ClienteService {
         return repository.findById(id).orElse(null);
     }
 
-    public List<Cliente> listaClistes(){
+    public List<Cliente> listaClistes() {
         return repository.findAll();
     }
 
-    public String remover(Long id){
+    public String remover(Long id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);
             return "Cliente removido com sucesso";
-        }else{
+        } else {
             return "Cliente não encontrado";
         }
     }

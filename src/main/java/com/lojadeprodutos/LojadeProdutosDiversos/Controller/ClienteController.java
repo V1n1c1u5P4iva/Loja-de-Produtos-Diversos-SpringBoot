@@ -5,6 +5,8 @@ import java.util.List;
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Cliente;
 import com.lojadeprodutos.LojadeProdutosDiversos.Service.ClienteService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +27,18 @@ public class ClienteController {
     }
 
     @PostMapping
-    public void salvar(@RequestBody Cliente cliente) {
-        service.salvar(cliente);
+    public ResponseEntity<?> salvar(@RequestBody Cliente cliente) {
+        try {
+            Cliente clienteSalvo = service.salvar(cliente);
+            return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
+
+        } catch (RuntimeException e) {
+            if (e.getMessage().contains("E-mail já cadastrado")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+            }
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     @GetMapping("{id}")
@@ -49,7 +61,7 @@ public class ClienteController {
     }
 
     @DeleteMapping("{id}")
-    public String  deletarCliente(@PathVariable Long id){
+    public String deletarCliente(@PathVariable Long id) {
         return service.remover(id);
     }
 
