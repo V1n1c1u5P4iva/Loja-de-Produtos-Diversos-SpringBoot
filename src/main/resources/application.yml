@@ -2,12 +2,11 @@ spring:
   application:
     name: LojadeProdutosDiversos 
   datasource:
-    url: jdbc:h2:mem:produtos
-    username: sa
-    password:
+    url: jdbc:postgresql://localhost
+    username: 
+    password: 
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-  h2:
-    console:
-      enabled: true  # Corrigido de "anabled" para "enabled"
-      path: /h2-console
+    show-sql: true
+    hibernate:
+      ddl-auto: update

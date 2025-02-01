@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Cliente;
 import com.lojadeprodutos.LojadeProdutosDiversos.Service.ClienteService;
+import com.lojadeprodutos.LojadeProdutosDiversos.exception.ClientesException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,19 +32,16 @@ public class ClienteController {
         try {
             Cliente clienteSalvo = service.salvar(cliente);
             return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
-
-        } catch (RuntimeException e) {
-            if (e.getMessage().contains("E-mail já cadastrado")) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-            }
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        } catch (ClientesException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao salvar cliente: " + e.getMessage());
         }
     }
 
-    @GetMapping("{id}")
-    public Cliente mostrarCliente(@PathVariable Long id) {
-        return service.bucarPorId(id);
+    @GetMapping("{email}")
+    public Cliente mostrarCliente(@PathVariable String email) {
+        return service.bucarPorEmail(email);
     }
 
     @GetMapping("/lista")

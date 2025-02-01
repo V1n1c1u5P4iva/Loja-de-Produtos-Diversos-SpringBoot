@@ -3,6 +3,7 @@ package com.lojadeprodutos.LojadeProdutosDiversos.Service;
 import java.util.List;
 
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Cliente;
+import com.lojadeprodutos.LojadeProdutosDiversos.exception.ClientesException;
 import com.lojadeprodutos.LojadeProdutosDiversos.repository.ClienteRepository;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,9 +20,9 @@ public class ClienteService {
 
     public Cliente salvar(Cliente cliente) {
         try {
-            return repository.save(cliente); // Salva o cliente no banco de dados
+            return repository.save(cliente); 
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("E-mail já cadastrado: " + cliente.getEmail());
+            throw new ClientesException("E-mail já cadastrado: " + cliente.getEmail());
         } catch (Exception e) {
             throw new RuntimeException("Erro ao salvar cliente: " + e.getMessage());
         }
@@ -33,8 +34,8 @@ public class ClienteService {
         return cliente;
     }
 
-    public Cliente bucarPorId(Long id) {
-        return repository.findById(id).orElse(null);
+    public Cliente bucarPorEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     public List<Cliente> listaClistes() {
