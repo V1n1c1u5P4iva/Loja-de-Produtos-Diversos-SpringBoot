@@ -7,6 +7,9 @@ import com.lojadeprodutos.LojadeProdutosDiversos.Models.Fornecedor;
 import com.lojadeprodutos.LojadeProdutosDiversos.Models.Produto;
 import com.lojadeprodutos.LojadeProdutosDiversos.repository.FornecedorRepository;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class FornecedorService {
 
     private FornecedorRepository repository;
@@ -24,11 +27,20 @@ public class FornecedorService {
         }
     }
 
-    public List<Fornecedor> listarFornecedor() {
+    public List<Fornecedor> salvarVariosFornecedores(List<Fornecedor> fornecedores) {
+        try {
+            repository.saveAll(fornecedores);
+            return fornecedores;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro! " + e.getMessage());
+        }
+    }
+
+    public List<Fornecedor> listarFornecedores() {
         return repository.findAll();
     }
 
-    public List<Produto> produtosDofornecedor(Long id) {
+    public List<Produto> produtosDoFornecedor(Long id) {
         Optional<Fornecedor> optionalFornecedor = repository.findById(id);
 
         if (optionalFornecedor.isPresent()) {
