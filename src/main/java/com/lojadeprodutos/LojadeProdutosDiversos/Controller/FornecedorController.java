@@ -37,7 +37,7 @@ public class FornecedorController {
         }
     }
 
-    @PostMapping("/fornecedores")
+    @PostMapping("/salvarVariosFornecedores")
     public ResponseEntity<?> salvarVariosFornecedores(@RequestBody List<Fornecedor> fornecedores) {
         try {
             List<Fornecedor> fornecedoresSalvos = service.salvarVariosFornecedores(fornecedores);
@@ -48,7 +48,7 @@ public class FornecedorController {
         }
     }
 
-    @GetMapping("/lista")
+    @GetMapping("/listarFornecedores")
     public List<Fornecedor> listaFornecedores() {
         return service.listarFornecedores();
     }

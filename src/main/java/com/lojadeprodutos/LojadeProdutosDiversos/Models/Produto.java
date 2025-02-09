@@ -1,6 +1,9 @@
 package com.lojadeprodutos.LojadeProdutosDiversos.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,8 +23,9 @@ public class Produto {
     private float preco;
     private int estoque;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fornecedor_id", nullable = false)
+    @JsonIgnoreProperties("produtos")
     private Fornecedor fornecedor;
 
 }
